@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="dark">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="/script.js"></script>
+  <title>Crie seu curriculo</title>
+</head>
+
+<body class="dark:bg-gray-900 dark:text-white text-gray-800">
+<!--Navbar-->
+<nav id="navbar" class="dark:bg-gray-900 bg-gray-40 dark:text-white text-gray-800 p-4">
+    <div class="max-w-screen-xl flex items-center justify-between mx-auto">
+        <a href="" class="flex items-center space-x-3 rtl:space-x-reverse hover:no-underline dark:text-gray-300 dark:hover:text-white" >
+            <img src="/assets/Icon.png" class="h-12 rounded-full" alt="Flowbite Logo" />
+            <span class="text-medium font-semibold whitespace-nowrap">Programa Emprega Jovem</span>
+        </a>
+        <div class="md:hidden">
+            <button id="menu-toggle" class="text-xl text-gray-500 dark:text-gray-400 hover:bg-blue-700 hover:text-white focus:outline-none rounded-lg text-sm p-2.5">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="md:flex flex-grow justify-end items-center space-x-8 hidden md:block" id="navbar-default">
+            <a href="/index.html" class="hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Inicio</a>
+            <a href="/curriculo/cvCreator.html" class="hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Faça seu currículo</a>
+            <a href="#" class="hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Cresça profissionalmente</a>
+            <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-blue-700 transition ease-in-out duration-200 hover:text-white focus:outline-none rounded-lg text-sm p-2.5 ">
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+            </button>
+        </div>
+    </div>
+    <div class="md:hidden text-center" id="menu-toogle-items">
+      <a href="/index.html" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Inicio</a>
+      <a href="/curriculo/cvCreator.html" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Faça seu currículo</a>
+      <a href="#" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Cresça profissionalmente</a>
+      <a id="theme-toggle-mobile" type="button" class="hover:text-white block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">
+          Light Mode
+      </a>
+    </div>
+</nav>
+<!--Navbar-->
+
+
+
+<!--Banner-->
+<div class="relative overflow-hidden">
+    <div class="parallax-bg h-auto text-white py-24 px-10 relative" style="background-color: rgb(37, 99, 235);">
+        <div class="md:w-1/2 mx-auto text-center flex items-center justify-center relative z-10">
+            <div>
+                <p class="font-medium text-base">Programa</p>
+                <p class="text-3xl font-bold mb-10">EMPREGA JOVEM</p>
+                <button type="button" class="hover:font-extrabold text-blue-600 bg-white focus:outline-none focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 transform transition-transform hover:scale-105 dark:hover:scale-105">Vagas disponiveis</button>
+            </div>
+        </div>
+    </div>
+    <div class="parallax-foreground hidden sm:block absolute top-0 right-1/4 bottom-0 left-auto flex items-center justify-center z-0">
+        <img src="/assets/pessoa.png" alt="Pessoa" class="w-64 h-64 md:w-auto md:h-full max-w-full max-h-full" style="width: 100%; height: auto;" />
+    </div>
+</div>
+<!--Banner-->
+
+
+<div class="flex justify-center">      
+
+  <form action="#" id="form1" class="mt-12 mx-4 sm:mx-auto sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/3">
+    <div class="grid gap-4 mb-4 sm:grid-cols-1 mt-3   bg-gray-50 dark:bg-gray-800 mb-3 p-8 rounded-xl">
+              <div>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Foto</label>
+                <input class="block w-full text-sm text-gray-900 border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="image-input" type="file">
+              </div>
+              <div>
+                <label for="nome" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
+                <input type="text" name="nome" id="nome" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+              </div>
+              <div class="flex">
+                <div class="flex-1 pr-2">
+                  <label for="celular" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefone/Celular</label>
+                  <input type="text" name="celular" id="celular" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                </div>
+                <div class="flex-1 pl-2">
+                  <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail</label>
+                  <input type="text" name="email" id="email" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
+                </div>
+              </div>
+              <div>
+                <label for="cep" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Buscar por CEP</label>
+                <div class="flex items-center">
+                  <input type="text" name="cep" id="cep" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
+                  <button id="cep-button" class="p-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-2">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                    <span class="sr-only">Pesquisar</span>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label for="logradouro" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Logradouro</label>
+                <input type="text" name="logradouro" id="logradouro" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
+              </div>
+              <div class="flex">
+                <div class="flex-1 pr-2">
+                  <label for="cidade" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
+                  <input type="text" name="cidade" id="cidade" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
+                </div>
+                <div class="flex-1 pl-2">
+                  <label for="uf" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">UF</label>
+                  <input type="text" name="uf" id="uf" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button type="button" id="btnProximo1" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <span class="fa fa-arrow-right"></span>
+              </button>
+            </div>
+    </form>
+
+
+
+    <form action="#" id="form2" class="hidden mt-12 mx-4 sm:mx-auto sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/3">
+          <div class="grid gap-4 mb-4 sm:grid-cols-1 mt-3 ">
+            <div class="mb-5">
+                <label for="formacaoAcademica" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Formação Acadêmica</label>
+                <div class="flex items-center">
+                  <div class="bg-gray-50 border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-50 dark:text-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" style="margin-right: 8px;">
+                    Adicione informações sobre seus cursos, graduações, certificações e outras formações acadêmicas relevantes.
+                  </div>
+                  <button type="button" id="addFormacao" class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                    <i class="fas fa-plus me-2 text-lg"></i>
+                  </button>
+                </div>
+                <div id="formacaoContainer"></div>
+            </div>
+            <div class="mb-5">
+                <label for="experienciaProfissional" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Experiência Profissional</label>
+                <div class="flex items-center">
+                  <div class="bg-gray-50 border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-50 dark:text-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" style="margin-right: 8px;">
+                    Você pode incluir estágios, empregos formais, trabalhos informais e voluntariado.
+                  </div>
+                  <button type="button" id="addExperiencia" class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                    <i class="fas fa-plus me-2 text-lg"></i>
+                  </button>
+                </div>
+                <div id="experienciaContainer"></div>
+            </div>
+            <div class="mb-5">
+                <label for="habilidades" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Habilidades</label>
+                <div class="flex items-center">
+                  <div class="bg-gray-50 border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-50 dark:text-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" style="margin-right: 8px;">
+                    Destaque suas habilidades e competências.
+                  </div>
+                  <button type="button" id="addHabilidade" class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                    <i class="fas fa-plus me-2 text-lg"></i>
+                  </button>
+                </div>
+                <div id="habilidadesContainer"></div>
+            </div>
+        </div>
+          <div class="flex justify-between">
+            <button type="button" id="btnAnterior" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <span class="fa fa-arrow-left"></span>
+            </button>
+            <div>
+              <button type="button" id="btnProximo2" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <span class="fa fa-arrow-right"></span>
+              </button>
+            </div>
+          </div>
+      </form>
+</div>
+
+    <div id="curriculoPreview" class="mt-8"></div>
+    </div>
+
+
+
+
+
+<!--Footer-->
+<footer class="rounded-lg m-4 mt-16 dark:bg-gray-900">
+    <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="" class="hover:underline">Programa Emprega Jovem - Ibiapaba</a>.
+    </span>
+    <span class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+        Laboratório Juventude - Senac
+    </span>
+    </div>
+</footer>
+<!--Footer-->
+
+
+
+
+
+
+
+
+<!-- Toggle dark/light theme Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+      var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+      var navbar = document.getElementById('navbar');
+      var themeToggleBtn = document.getElementById('theme-toggle');
+      var themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
+
+      function toggleTheme() {
+          themeToggleDarkIcon.classList.toggle('hidden');
+          themeToggleLightIcon.classList.toggle('hidden');
+
+          document.documentElement.classList.toggle('dark');
+
+          navbar.classList.toggle('dark:bg-gray-900', document.documentElement.classList.contains('dark'));
+          navbar.classList.toggle('bg-white', !document.documentElement.classList.contains('dark'));
+
+          if (document.documentElement.classList.contains('dark')) {
+              localStorage.setItem('color-theme', 'dark');
+              themeToggleBtnMobile.textContent = 'Dark Mode';
+          } else {
+              localStorage.setItem('color-theme', 'light');
+              themeToggleBtnMobile.textContent = 'Light Mode';
+          }
+      }
+
+      themeToggleBtn.addEventListener('click', toggleTheme);
+      themeToggleBtnMobile.addEventListener('click', toggleTheme);
+
+      // Initial theme setup
+      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+          themeToggleLightIcon.classList.remove('hidden');
+          themeToggleBtnMobile.textContent = 'Dark Mode';
+      } else {
+          document.documentElement.classList.remove('dark');
+          themeToggleDarkIcon.classList.remove('hidden');
+          themeToggleBtnMobile.textContent = 'Light Mode';
+      }
+  });
+</script>
+<!-- Toggle dark/light theme Script -->
+
+
+
+
+<!--CEP Script-->
+<script>
+  $(document).ready(function() {
+    function consultarCEP(cep) {
+      $.ajax({
+        url: `https://viacep.com.br/ws/${cep}/json/`,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+
+          $('#logradouro').val(data.logradouro);
+          $('#cidade').val(data.localidade);
+          $('#uf').val(data.uf);
+        },
+        error: function() {
+          alert('CEP não encontrado.');
+        }
+      });
+    }
+
+    $('#cep-button').click(function(e) {
+      e.preventDefault();
+      var cep = $('#cep').val().replace(/\D/g, '');
+      if (cep.length === 8) {
+        consultarCEP(cep);
+      } else {
+        alert('Formato de CEP inválido.');
+      }
+    });
+  });
+</script>
+<!--CEP Script-->
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form1 = document.querySelector('#form1');
+    const form2 = document.querySelector('#form2');
+    const btnAnterior = document.querySelector('#btnAnterior');
+    const btnProximo1 = document.querySelector('#btnProximo1');
+    const btnProximo2 = document.querySelector('#btnProximo2');
+
+    btnProximo1.addEventListener('click', function () {
+      form1.classList.add('hidden');
+      form2.classList.remove('hidden');
+    });
+
+    btnProximo2.addEventListener('click', function () {
+      form2.classList.add('hidden');
+      form1.classList.remove('hidden');
+    });
+
+    btnAnterior.addEventListener('click', function () {
+      form2.classList.add('hidden');
+      form1.classList.remove('hidden');
+    });
+  });
+</script>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      let numFormacao = 0;
+      let numExperiencia = 0;
+      let numHabilidade = 0;
+
+      function createFormacaoInput() {
+          numFormacao++;
+          const container = document.getElementById("formacaoContainer");
+          const div = document.createElement("div");
+          div.innerHTML = `
+          <div class="mt-3 bg-gray-50 dark:bg-gray-800 mb-3 p-3 rounded-xl">
+            <div class="mt-2 text-gray-900 dark:text-white">
+                  <label for="nivel${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Nível do Curso</label>
+                  <select id="nivel${numFormacao}" name="nivel${numFormacao}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md ">
+                      <option class="dark:text-white dark:bg-gray-700" value="fundamental">Curso Livre</option>
+                      <option class="dark:text-white dark:bg-gray-700" value="fundamental">Ensino Fundamental</option>
+                      <option class="dark:text-white dark:bg-gray-700" value="medio">Ensino Médio</option>
+                      <option class="dark:text-white dark:bg-gray-700" value="tecnico">Curso Técnico</option>
+                      <option class="dark:text-white dark:bg-gray-700" value="tecnologo">Curso Tecnólogo</option>
+                      <option class="dark:text-white dark:bg-gray-700" value="bacharelado">Bacharelado</option>
+                      <option class="dark:text-white dark:bg-gray-700" value="licenciatura">Licenciatura</option>
+                      <option class="dark:text-white dark:bg-gray-700" value="pos-graduacao">Pós-graduação</option>
+                      <option class="dark:text-white dark:bg-gray-700" value="mestrado">Mestrado</option>
+                      <option class="dark:text-white dark:bg-gray-700" value="doutorado">Doutorado</option>
+                    </select>
+              </div>
+              <div class="mt-2">
+                  <label for="curso${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Curso</label>
+                  <input type="text" id="curso${numFormacao}" name="curso${numFormacao}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+              </div>
+              <div class="mt-2 pb-4">
+                  <label for="instituicao${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Instituição</label>
+                  <input type="text" id="instituicao${numFormacao}" name="instituicao${numFormacao}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+              </div>
+            </div>
+          `;
+          container.appendChild(div);
+      }
+
+      function createExperienciaInput() {
+          numExperiencia++;
+          const container = document.getElementById("experienciaContainer");
+          const div = document.createElement("div");
+          div.innerHTML = `
+          <div class="mt-3 bg-gray-50 dark:bg-gray-800 mb-3 p-3 rounded-xl">
+            <div class="mt-2">
+              <label for="cargo${numExperiencia}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Cargo</label>
+              <input type="text" id="cargo${numExperiencia}" name="cargo${numExperiencia}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+            </div>
+            <div class="mt-2">
+              <label for="empresa${numExperiencia}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Empresa ou Instituição</label>
+              <input type="text" id="empresa${numExperiencia}" name="empresa${numExperiencia}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+            </div>
+            <div class="mt-2  pb-4">
+              <label for="periodo${numExperiencia}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Periodo</label>
+              <input type="text" id="periodo${numExperiencia}" name="periodo${numExperiencia}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md" placeholder="Exemplo: Janeiro/2023 - Novembro/2023">
+            </div>
+          </div>
+          `;
+          container.appendChild(div);
+      }
+  
+      function createHabilidadeInput() {
+          numHabilidade++;
+          const container = document.getElementById("habilidadesContainer");
+          const div = document.createElement("div");
+          div.innerHTML = `
+          <div class="mt-3 bg-gray-50 dark:bg-gray-800 mb-3 p-3 rounded-xl">
+              <div class="mt-1">
+                  <label for="habilidade${numHabilidade}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Habilidade ou Competência</label>
+                  <input type="text" id="habilidade${numHabilidade}" name="habilidade${numHabilidade}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+              </div>
+          </div>
+          `;
+          container.appendChild(div);
+      }
+  
+      document.getElementById("addFormacao").addEventListener("click", createFormacaoInput);
+      document.getElementById("addExperiencia").addEventListener("click", createExperienciaInput);
+      document.getElementById("addHabilidade").addEventListener("click", createHabilidadeInput);
+  });
+  </script>
+
+
+</body>
+</html>
