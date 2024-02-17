@@ -17,7 +17,7 @@ Para o desenvolvimento da plataforma, utilizamos as seguintes tecnologias:
 
 ## Como Usar
 
-Para acessar a plataforma, visite: Emprega Jovem +
+Para acessar a plataforma, visite: https://empregajovemmais.netlify.app
 
 ## Apoie o Projeto
 
