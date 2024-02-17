@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="dark">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+  <script src="/script.js"></script>
+  <title>Vagas</title>
+
+<body class="dark:bg-gray-900 dark:text-white text-gray-800">
+
+    <div id="popup-modal-success" tabindex="-1" class="hidden fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white dark:bg-gray-700 rounded-lg p-4 w-full max-w-md relative">
+          <div class="text-center">
+            <svg class="mx-auto mb-4 text-blue-500 w-12 h-12 dark:text-blue-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+            </svg>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">texto</h3>
+            <button data-modal-hide="popup-modal-success" type="button" class="transition-transform transform hover:scale-110 text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+              Ok!
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="popup-modal-erro" tabindex="-1" class="hidden fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50 z-50">
+        <div class="bg-white dark:bg-gray-700 rounded-lg p-4 w-full max-w-md">
+            <div class="text-center">
+                <svg class="mx-auto mb-4 text-red-500 w-12 h-12 dark:text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400" id="popup-message">Texto padrão</h3>
+                <button data-modal-hide="popup-modal-erro" type="button" class="transition-transform transform hover:scale-110 text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                    Ok!
+                </button>
+            </div>
+        </div>
+    </div>
+
+<!--Navbar-->
+<nav id="navbar" class="shadow-lg fixed z-50 w-full top-0 dark:bg-gray-900 bg-gray-50 dark:text-white text-gray-800 p-4">
+    <div class="max-w-screen-xl flex items-center justify-between mx-auto">
+          <a href="" class="flex items-center space-x-3 rtl:space-x-reverse hover:no-underline dark:text-gray-300 dark:hover:text-white" >
+              <img src="/assets/Icon.png" class="h-12 rounded-full" alt="Flowbite Logo" />
+              <span class="text-medium font-semibold whitespace-nowrap">Emprega Jovem +</span>
+          </a>
+          <div class="md:hidden">
+              <button id="menu-toggle" class="text-xl text-gray-500 dark:text-gray-400 hover:bg-blue-700 hover:text-white focus:outline-none rounded-lg text-sm p-2.5">
+                  <i class="fas fa-bars"></i>
+              </button>
+          </div>
+          <div class="md:flex flex-grow justify-end items-center space-x-8 hidden md:block" id="navbar-default">
+              <a href="/index.html" class="transition-transform transform hover:scale-110 hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Inicio</a>
+              <a href="/curriculo/curriculo.html" class="transition-transform transform hover:scale-110 hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Faça seu currículo</a>
+              <a href="/vagas/vagas.html" class="transition-transform transform hover:scale-110 hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Vagas</a>
+              <a href="/cursos/cursos.html" class="transition-transform transform hover:scale-110 hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Cresça profissionalmente</a>
+              <button id="theme-toggle" type="button" class="transition-transform transform hover:scale-110 text-gray-500 dark:text-gray-400 hover:bg-blue-700 transition ease-in-out duration-200 hover:text-white focus:outline-none rounded-lg text-sm p-2.5 ">
+                  <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                  <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+              </button>
+          </div>
+      </div>
+      <div class="md:hidden text-center" id="menu-toogle-items">
+        <a href="/index.html" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Inicio</a>
+        <a href="/curriculo/curriculo.html" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Faça seu currículo</a>
+        <a href="/vagas/vagas.html" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Vagas</a>
+        <a href="/cursos/cursos.html" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Cresça profissionalmente</a>
+        <a id="theme-toggle-mobile" type="button" class="hover:text-white block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">
+            Tema Claro
+        </a>
+      </div>
+</nav>
+<!--Navbar-->
+
+
+
+<!--Banner-->
+<div class="relative overflow-hidden mt-16">
+    <div class="parallax-bg h-auto text-white py-24 px-10 relative" style="background-color: rgb(37, 99, 235);">
+          <div class="md:w-1/2 mx-auto text-center flex items-center justify-center relative z-10">
+              <div>
+                  <p class="font-medium text-base">Programa</p>
+                  <p class="text-3xl font-bold mb-10">EMPREGA JOVEM +</p>
+                  <a type="button" href="/curriculo/curriculo.html" class="hover:font-extrabold text-blue-600 bg-gray-50 focus:outline-none focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-gray-50 transform transition-transform hover:scale-105 dark:hover:scale-105">Não possui um currículo? Crie agora!</a>
+              </div>
+          </div>
+      </div>
+      <div class="parallax-foreground hidden sm:block absolute top-0 right-1/4 bottom-0 left-auto flex items-center justify-center z-0">
+          <img src="/assets/pessoa4.png" alt="Pessoa" class="w-64 h-64 md:w-auto md:h-full max-w-full max-h-full" style="width: 100%; height: auto;" />
+      </div>
+</div>
+<!--Banner-->
+
+<div class="mb-4 border-b border-gray-200 dark:border-gray-700 flex justify-center">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-700 hover:border-gray-700 dark:hover:text-gray-300"id="vagas-tab" data-tabs-target="#vagas" type="button" role="tab" aria-controls="vagas" aria-selected="false">Vagas</button>
+        </li>
+        <li role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-700 hover:border-gray-700 dark:hover:text-gray-300" id="curriculo-tab" data-tabs-target="#curriculo" type="button" role="tab" aria-controls="curriculo" aria-selected="false">Enviar Currículo</button>
+        </li>
+    </ul>
+</div>
+
+
+<div role="tabpanel" aria-labelledby="vagas-tab" id="curriculo" class="mt-12 mx-4 sm:mx-auto sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/3">
+    <div class="grid gap-4 mb-4 sm:grid-cols-1 mt-3  bg-gray-50 dark:bg-gray-800 mb-3 p-8 rounded-xl">
+        <h2 class="text-3xl font-extrabold dark:text-white mb-8">Podemos te encaminhar para oportunidades!</h2>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Não encontrou vagas no momento? envie seu currículo para o nosso banco de talentos para ser considerado em futuras oportunidades.</p>
+            <div>
+                <div class="mb-12">
+                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" for="file_input">Currículo</label>
+                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="fileUploadControl" name="fileUploadControl" type="file">
+                </div>
+
+                <label for="area_atuacao" class="lock mb-2 text-lg font-medium text-gray-900 dark:text-white">Área de Atuação</label>
+                <p class="mb-4 text-sm font-normal text-gray-500 dark:text-gray-400">Selecione abaixo, em quais áreas de atuação você gostaria de trabalhar.</p>
+
+                <select id="area_atuacao" name="area_atuacao" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                    <option class="dark:text-white dark:bg-gray-700" value="" selected disabled>Selecione aqui</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Tecnologia da Informação (TI)">TI - Tecnologia da Informação</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Enfermagem">Enfermagem</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Fisioterapia">Fisioterapia</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Psicologia">Psicologia</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Advocacia">Advocacia</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Engenharia">Engenharia</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Marketing">Marketing</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Administração">Administração</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Educação">Educação</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Design">Design</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Arquitetura">Arquitetura</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Agricultura">Agricultura</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Logística">Logística</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Comunicação">Comunicação</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Vendas">Vendas</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Financeiro">Financeiro</option>
+                    <option class="dark:text-white dark:bg-gray-700" value="Outro">Outro</option>
+                </select>
+            </div>
+
+            <div id="selectedTags" class="mt-4">
+            </div>
+            <div class="flex justify-center">
+                <button type="button" id="enviarCurriculo" class="transition-transform transform hover:scale-110 hidden mx-auto text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Enviar
+                </button>
+            </div>
+        </div>
+</div>
+
+
+
+<div id="vagas" role="tabpanel" aria-labelledby="curriculo-tab" class="mx-auto mt-12 sm:mx-4 sm:mx-auto sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/3">
+
+<div class="grid gap-4 mb-4 mx-4 sm:grid-cols-1 mt-3  bg-gray-50 dark:bg-gray-800 mb-3 p-8 rounded-xl">
+    <a>
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Banco de Talentos - Casa de Variedades <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Ubajara - CE</span></h5>
+    </a>
+    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">A Casa de Variedades está em busca de talentos para futuras oportunidades. Envie seu currículo e faça parte do banco de talentos.</p>
+    <a href="mailto:curriculoubj@casadevariedades.com.br?subject=Curriculo&body=Ol%C3%A1%20Equipe%20da%20Casa%20de%20Variedades,%0D%0A%0D%0AEstou%20enviando%20meu%20curr%C3%ADculo%20para%20participar%20do%20Banco%20de%20Talentos.%20Fico%20ansioso(a)%20para%20uma%20oportunidade%20futura.%0D%0A%0D%0AAtenciosamente,%0D%0A[Seu%20Nome]">
+        <button type="button" class="transition-transform transform hover:scale-110 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Candidatar-se</button>
+    </a>
+</div>
+
+<div class="p-4 mt-16 mb-4 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-400" role="alert">
+    Se ainda não encontrou a oportunidade ideal, não desanime! <a class="cursor-pointer text-blue-600 dark:text-blue-400 font-semibold" onclick="openCurriculoTab()">Envie seu currículo para nosso banco de talentos</a> e seja considerado para futuras vagas que possam surgir.
+</div>
+
+</div>
+
+<script>
+    function openCurriculoTab() {
+        // Código para abrir a aba com id "curriculo"
+        document.getElementById('curriculo-tab').click();
+    }
+</script>
+
+
+
+
+<!--Footer-->
+<footer class="rounded-lg m-4 mt-16 dark:bg-gray-900">
+    <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="" class="hover:underline">Programa Emprega Jovem - Ibiapaba</a>.
+    </span>
+    <span class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+        Laboratório Juventude - Senac
+    </span>
+    </div>
+</footer>
+<!--Footer-->
+
+
+
+<!-- Toggle dark/light theme Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        var navbar = document.getElementById('navbar');
+        var themeToggleBtn = document.getElementById('theme-toggle');
+        var themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
+
+        function toggleTheme() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            document.documentElement.classList.toggle('dark');
+
+            navbar.classList.toggle('dark:bg-gray-900', document.documentElement.classList.contains('dark'));
+            navbar.classList.toggle('bg-white', !document.documentElement.classList.contains('dark'));
+
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.setItem('color-theme', 'dark');
+                themeToggleBtnMobile.textContent = 'Tema Escuro';
+            } else {
+                localStorage.setItem('color-theme', 'light');
+                themeToggleBtnMobile.textContent = 'Tema Claro';
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleBtnMobile.addEventListener('click', toggleTheme);
+
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeToggleLightIcon.classList.remove('hidden');
+            themeToggleBtnMobile.textContent = 'Tema Escuro';
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeToggleDarkIcon.classList.remove('hidden');
+            themeToggleBtnMobile.textContent = 'Tema Claro';
+        }
+    });
+</script>
+<!-- Toggle dark/light theme Script -->
+
+
+
+<script>
+    // script de tags selecionadas //
+const areaAtuacaoSelect = document.getElementById('area_atuacao');
+const selectedTagsContainer = document.getElementById('selectedTags');
+const selectedOptions = [];
+
+areaAtuacaoSelect.addEventListener('change', function() {
+    const selectedOption = areaAtuacaoSelect.options[areaAtuacaoSelect.selectedIndex];
+
+    if (selectedOption.value && !selectedOptions.includes(selectedOption.value)) {
+        selectedOptions.push(selectedOption.value);
+        addTag(selectedOption.value, selectedOption.text);
+        selectedOption.selected = false;
+    }
+});
+
+function addTag(value, text) {
+  const tagElement = document.createElement('span');
+  tagElement.classList.add('inline-flex', 'items-center', 'px-2', 'py-1', 'mx-1', 'mb-1', 'text-sm', 'font-medium', 'text-blue-800', 'bg-blue-100', 'rounded', 'dark:bg-blue-900', 'dark:text-blue-300');
+
+  tagElement.innerHTML = `
+      ${text}
+      <button type="button" class="inline-flex items-center p-1 ms-2 text-sm text-blue-400 bg-transparent rounded-sm hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-800 dark:hover:text-blue-300" onclick="removeTag(this)" data-value="${value}" aria-label="Remove">
+          <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+          <span class="sr-only">Remove badge</span>
+      </button>
+  `;
+  
+  selectedTagsContainer.appendChild(tagElement);
+  selectedOptions.push({ value, text });
+  document.getElementById('enviarCurriculo').style.display = 'block';
+}
+
+function removeTag(tagElement) {
+  const valueToRemove = tagElement.getAttribute('data-value');
+  const optionToRemove = areaAtuacaoSelect.querySelector(`[value="${valueToRemove}"]`);
+  optionToRemove.selected = false;
+
+  const indexToRemove = selectedOptions.indexOf(valueToRemove);
+  if (indexToRemove !== -1) {
+    selectedOptions.splice(indexToRemove, 1);
+  }
+
+  tagElement.parentElement.remove();
+}
+// script de tags selecionadas //
+</script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const firebaseConfig = {
+            apiKey: "AIzaSyDna36JWkYvRBGnHRX969L3sGGzP0Ab2d0",
+            authDomain: "empregajovem-a0819.firebaseapp.com",
+            projectId: "empregajovem-a0819",
+            storageBucket: "empregajovem-a0819.appspot.com",
+            messagingSenderId: "108050421223",
+            appId: "1:108050421223:web:2758352f7bbfd94ebad942"
+        };
+
+        initializeApp(firebaseConfig);
+
+        const storage = getStorage();
+
+        document.getElementById("enviarCurriculo").addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById("fileUploadControl");
+
+            if (fileInput.files.length > 0 && selectedOptions.length > 0) {
+                const processedFolders = new Set(); // Conjunto para rastrear pastas processadas
+
+                const promises = selectedOptions.map(({ value }) => {
+                    if (!processedFolders.has(value)) {
+                        const fileName = new Date().getTime() + "_" + fileInput.files[0].name;
+                        const folderPath = value ? `curriculos/${value}/` : 'curriculos/';
+
+                        const folderRef = ref(storage, folderPath);
+                        const metadata = { contentType: fileInput.files[0].type };
+
+                        processedFolders.add(value);
+
+                        return uploadBytes(ref(storage, folderPath + fileName), fileInput.files[0], metadata);
+                    }
+                    return Promise.resolve();
+                });
+
+                Promise.all(promises)
+                    .then(() => {
+                        showAlertModal('Ótimo, recebemos seu currículo!');
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao enviar os arquivos: ", error);
+                    });
+            } else {
+                showAlertModalErro('Ocorreu um erro. Por favor, selecione um arquivo de currículo (recomenda-se em PDF) e escolha as áreas de atuação desejadas.');
+            }
+        });
+    });
+</script>
+
+<script>
+function showAlertModal(message) {
+    document.querySelector('#popup-modal-success h3').innerText = message;
+    document.getElementById('popup-modal-success').classList.remove('hidden');
+
+    document.querySelector('#popup-modal-success [data-modal-hide]').addEventListener('click', function() {
+      document.getElementById('popup-modal-success').classList.add('hidden');
+    });
+  }
+</script>
+
+<script>
+    function showAlertModalErro(message) {
+      document.querySelector('#popup-modal-erro h3').innerText = message;
+      document.getElementById('popup-modal-erro').classList.remove('hidden');
+    }
+
+    document.querySelector('#popup-modal-erro [data-modal-hide]').addEventListener('click', function() {
+      document.getElementById('popup-modal-erro').classList.add('hidden');
+    });
+</script>
+
+
+
+</body>
+</html>

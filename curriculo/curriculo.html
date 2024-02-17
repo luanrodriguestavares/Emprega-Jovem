@@ -3,27 +3,66 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/style.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="script-curriculo.js"></script>
+  <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+  <script src="/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
   <title>Crie seu curriculo</title>
   <style>
-
+    .max-w-a4 {
+      max-width: 21cm;
+    }
+  
+    .w-a4 {
+      width: 21cm;
+    }
+  
   </style>
 </head>
 
 <body class="dark:bg-gray-900 dark:text-white text-gray-800">
 
+
+  <div id="popup-modal" tabindex="-1" class="hidden fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white dark:bg-gray-700 rounded-lg p-4 w-full max-w-md relative">
+      <div class="text-center">
+        <svg class="mx-auto mb-4 text-blue-500 w-12 h-12 dark:text-blue-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+        </svg>
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Texto Padrão</h3>
+        <button data-modal-hide="popup-modal" type="button" class="transition-transform transform hover:scale-110 text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+          Ok!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="popup-modal-erro" tabindex="-1" class="hidden fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50 z-50">
+    <div class="bg-white dark:bg-gray-700 rounded-lg p-4 w-full max-w-md">
+        <div class="text-center">
+            <svg class="mx-auto mb-4 text-red-500 w-12 h-12 dark:text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400" id="popup-message">Texto padrão</h3>
+            <button data-modal-hide="popup-modal-success" type="button" class="transition-transform transform hover:scale-110 text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                Ok!
+            </button>
+        </div>
+    </div>
+  </div>
+
+
+
 <!--Navbar-->
-<nav id="navbar" class="dark:bg-gray-900 bg-gray-40 dark:text-white text-gray-800 p-4">
-    <div class="max-w-screen-xl flex items-center justify-between mx-auto">
+<nav id="navbar" class="shadow-lg fixed z-50 w-full top-0 dark:bg-gray-900 bg-gray-50 dark:text-white text-gray-800 p-4">
+  <div class="max-w-screen-xl flex items-center justify-between mx-auto">
         <a href="" class="flex items-center space-x-3 rtl:space-x-reverse hover:no-underline dark:text-gray-300 dark:hover:text-white" >
-            <img src="/assets/Icon.png" class="h-12 rounded-full" alt="Flowbite Logo" />
-            <span class="text-medium font-semibold whitespace-nowrap">Programa Emprega Jovem</span>
+            <img src="/assets/Icon.png" class="h-12 rounded-full" alt="empregaJovemMais-logo" />
+            <span class="text-medium font-semibold whitespace-nowrap">Emprega Jovem +</span>
         </a>
         <div class="md:hidden">
             <button id="menu-toggle" class="text-xl text-gray-500 dark:text-gray-400 hover:bg-blue-700 hover:text-white focus:outline-none rounded-lg text-sm p-2.5">
@@ -31,10 +70,11 @@
             </button>
         </div>
         <div class="md:flex flex-grow justify-end items-center space-x-8 hidden md:block" id="navbar-default">
-            <a href="/index.html" class="hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Inicio</a>
-            <a href="/curriculo/curriculo.html" class="hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Faça seu currículo</a>
-            <a href="#" class="hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Cresça profissionalmente</a>
-            <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-blue-700 transition ease-in-out duration-200 hover:text-white focus:outline-none rounded-lg text-sm p-2.5 ">
+            <a href="/index.html" class="transition-transform transform hover:scale-110 hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Inicio</a>
+            <a href="/curriculo/curriculo.html" class="transition-transform transform hover:scale-110 hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Faça seu currículo</a>
+            <a href="/vagas/vagas.html" class="transition-transform transform hover:scale-110 hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Vagas</a>
+            <a href="/cursos/cursos.html" class="transition-transform transform hover:scale-110 hover:text-blue-700 hover:no-underline transition ease-in-out duration-200">Cresça profissionalmente</a>
+            <button id="theme-toggle" type="button" class="transition-transform transform hover:scale-110 text-gray-500 dark:text-gray-400 hover:bg-blue-700 transition ease-in-out duration-200 hover:text-white focus:outline-none rounded-lg text-sm p-2.5 ">
                 <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                 <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
             </button>
@@ -43,9 +83,10 @@
     <div class="md:hidden text-center" id="menu-toogle-items">
       <a href="/index.html" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Inicio</a>
       <a href="/curriculo/curriculo.html" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Faça seu currículo</a>
-      <a href="#" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Cresça profissionalmente</a>
+      <a href="/vagas/vagas.html" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Vagas</a>
+      <a href="/cursos/cursos.html" class="block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">Cresça profissionalmente</a>
       <a id="theme-toggle-mobile" type="button" class="hover:text-white block py-2 px-4 text-sm font-bold hover:bg-blue-700 hover:no-underline hover:text-white rounded-lg transition ease-in-out duration-200">
-          Light Mode
+          Tema Claro
       </a>
     </div>
 </nav>
@@ -54,52 +95,67 @@
 
 
 <!--Banner-->
-<div class="relative overflow-hidden">
-    <div class="parallax-bg h-auto text-white py-24 px-10 relative" style="background-color: rgb(37, 99, 235);">
+<div class="relative overflow-hidden mt-16">
+  <div class="parallax-bg h-auto text-white py-24 px-10 relative" style="background-color: rgb(37, 99, 235);">
         <div class="md:w-1/2 mx-auto text-center flex items-center justify-center relative z-10">
             <div>
                 <p class="font-medium text-base">Programa</p>
-                <p class="text-3xl font-bold mb-10">EMPREGA JOVEM</p>
-                <button type="button" class="hover:font-extrabold text-blue-600 bg-white focus:outline-none focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 transform transition-transform hover:scale-105 dark:hover:scale-105">Vagas disponiveis</button>
+                <p class="text-3xl font-bold mb-10">EMPREGA JOVEM +</p>
+                <a href="/cursos/cursos.html" type="button" class="hover:font-extrabold text-blue-600 bg-gray-50 focus:outline-none focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-gray-50 transform transition-transform hover:scale-105 dark:hover:scale-105">Onde encontrar cursos gratuitos?</a>
             </div>
         </div>
     </div>
     <div class="parallax-foreground hidden sm:block absolute top-0 right-1/4 bottom-0 left-auto flex items-center justify-center z-0">
-        <img src="/assets/pessoa.png" alt="Pessoa" class="w-64 h-64 md:w-auto md:h-full max-w-full max-h-full" style="width: 100%; height: auto;" />
+        <img src="/assets/pessoa2.png" alt="Pessoa" class="w-64 h-64 md:w-auto md:h-full max-w-full max-h-full" style="width: 100%; height: auto;" />
     </div>
 </div>
 <!--Banner-->
+
 
 
 <div class="flex justify-center">      
 
   <form action="#" id="form1" class="mt-12 mx-4 sm:mx-auto sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/3">
     <div class="grid gap-4 mb-4 sm:grid-cols-1 mt-3   bg-gray-50 dark:bg-gray-800 mb-3 p-8 rounded-xl">
-      <h2 class="text-3xl font-extrabold dark:text-white mb-8">Vamos criar seu currículo!</h2>
+      <h2 class="text-3xl font-extrabold dark:text-white mb-8">Não tem um currículo? Vamos ajudar a criar o seu!</h2>
 
-             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Foto</label>
-                <input class="block w-full text-sm text-gray-900 border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="image-input" type="file">
+              <div>
+                  <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" for="image-input">Foto</label>
+                  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="image-input" type="file" accept="image/*">
               </div>
               <div>
-                <label for="nome" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
-                <input type="text" name="nome" id="nome" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                <label for="nome" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Nome</label>
+                <input type="text" name="nome" id="nome" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Preferencialmente nome completo, ou nome e sobrenome." required>
               </div>
               <div class="flex">
-                <div class="flex-1 pr-2">
-                  <label for="celular" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefone/Celular</label>
-                  <input type="text" name="celular" id="celular" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
-                </div>
-                <div class="flex-1 pl-2">
-                  <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail</label>
-                  <input type="text" name="email" id="email" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
+                  <div class="flex-1 pr-2">
+                      <label for="celular" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Celular</label>
+                      <div class="relative">
+                          <input type="text" name="celular" id="celular" class="pl-10 bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required>
+                          <p class="txt-mercury absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-700 dark:text-gray-200">
+                              <svg aria-hidden="true" focusable="false" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" style="transform: scaleX(-1);">
+                                  <path fill="currentColor" d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/>
+                              </svg>
+                          </p>
+                      </div>
+                  </div>
+                  <div class="flex-1 pl-2">
+                    <label for="email" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">E-mail</label>
+                    <div class="relative">
+                        <input type="text" name="email" id="email" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 pl-10" placeholder="" required>
+                        <p class="txt-mercury absolute left-3 top-1/2 transform -translate-y-1/2  text-gray-700 dark:text-gray-200">
+                            <svg aria-hidden="true" focusable="false" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em">
+                                <path fill="currentColor" d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>
+                            </svg>
+                        </p>
+                    </div>
                 </div>
               </div>
               <div>
-                <label for="cep" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Buscar por CEP</label>
+                <label for="cep" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Buscar por CEP</label>
                 <div class="flex items-center">
-                  <input type="text" name="cep" id="cep" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
-                  <button id="cep-button" class="p-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-2">
+                  <input type="text" name="cep" id="cep" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required>
+                  <button id="cep-button" class=" transition-transform transform hover:scale-110 p-2.5 text-lg font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-2">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
@@ -108,22 +164,22 @@
                 </div>
               </div>
               <div>
-                <label for="logradouro" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Logradouro</label>
-                <input type="text" name="logradouro" id="logradouro" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
+                <label for="logradouro" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Logradouro</label>
+                <input type="text" name="logradouro" id="logradouro" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required>
               </div>
               <div class="flex">
                 <div class="flex-1 pr-2">
-                  <label for="cidade" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
-                  <input type="text" name="cidade" id="cidade" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
+                  <label for="cidade" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Bairro</label>
+                  <input type="text" name="cidade" id="cidade" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required>
                 </div>
                 <div class="flex-1 pl-2">
-                  <label for="uf" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">UF</label>
+                  <label for="uf" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">UF</label>
                   <input type="text" name="uf" id="uf" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required="">
                 </div>
               </div>
             </div>
             <div class="flex justify-end">
-              <button type="button" id="btnProximo1" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <button type="button" id="btnProximo1" class="transition-transform transform hover:scale-110 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <span class="fa fa-arrow-right"></span>
               </button>
             </div>
@@ -136,36 +192,36 @@
             <h2 class="text-3xl font-extrabold dark:text-white mb-8">Precisamos de mais algumas informações</h2>
 
             <div class="mb-5">
-                <label for="formacaoAcademica" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Formação Acadêmica</label>
+                <label for="formacaoAcademica" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Formação Acadêmica</label>
                 <div class="flex items-center">
                   <div class="bg-gray-50 border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-50 dark:text-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" style="margin-right: 8px;">
                     Adicione informações sobre seus cursos, graduações, certificações e outras formações acadêmicas relevantes.
                   </div>
-                  <button type="button" id="addFormacao" class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                  <button type="button" id="addFormacao" class="transition-transform transform hover:scale-110 inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                     <i class="fas fa-plus me-2 text-lg"></i>
                   </button>
                 </div>
                 <div id="formacaoContainer"></div>
             </div>
             <div class="mb-5">
-                <label for="experienciaProfissional" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Experiência Profissional</label>
+                <label for="experienciaProfissional" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Experiência Profissional</label>
                 <div class="flex items-center">
                   <div class="bg-gray-50 border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-50 dark:text-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" style="margin-right: 8px;">
                     Você pode incluir estágios, empregos formais, trabalhos informais e voluntariado.
                   </div>
-                  <button type="button" id="addExperiencia" class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                  <button type="button" id="addExperiencia" class="transition-transform transform hover:scale-110 inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                     <i class="fas fa-plus me-2 text-lg"></i>
                   </button>
                 </div>
                 <div id="experienciaContainer"></div>
             </div>
             <div class="mb-5">
-                <label for="habilidades" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Habilidades</label>
+                <label for="habilidades" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Habilidades</label>
                 <div class="flex items-center">
                   <div class="bg-gray-50 border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-50 dark:text-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" style="margin-right: 8px;">
                     Destaque suas habilidades e competências.
                   </div>
-                  <button type="button" id="addHabilidade" class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                  <button type="button" id="addHabilidade" class="transition-transform transform hover:scale-110 inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                     <i class="fas fa-plus me-2 text-lg"></i>
                   </button>
                 </div>
@@ -173,63 +229,43 @@
             </div>
         </div>
           <div class="flex justify-between">
-            <button type="button" id="btnAnterior" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <button type="button" id="btnAnterior" class="transition-transform transform hover:scale-110 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               <span class="fa fa-arrow-left"></span>
             </button>
             <div>
-              <button type="button" id="btnProximo2" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <button type="button" id="btnProximo2" class="transition-transform transform hover:scale-110 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <span class="fa fa-arrow-right"></span>
               </button>
             </div>
           </div>
       </form>
 
+
       <form action="#" id="form3" class="hidden mt-12 mx-4 sm:mx-auto sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/3">
               <div class="grid gap-4 mb-4 sm:grid-cols-1 mt-3   bg-gray-50 dark:bg-gray-800 mb-3 p-8 rounded-xl">
                   <h2 class="text-3xl font-extrabold dark:text-white mb-8">Estamos finalizando!</h2>
 
-                    <div>
-                      <label for="area_atuacao" class="lock mb-2 text-sm font-medium text-gray-900 dark:text-white">Área de Atuação</label>
-                      <p class="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">Selecione abaixo, para qual tipo de vaga devemos enviar seu currículo.</p>
+                  <p class="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">Ao clicar no botão abaixo, salve o seu currículo em PDF.</p>
 
-                      <select id="area_atuacao" name="area_atuacao" class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                          <option class="dark:text-white dark:bg-gray-700" value="ti">TI - Tecnologia da Informação</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="enfermagem">Enfermagem</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="fisioterapia">Fisioterapia</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="psicologia">Psicologia</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="advocacia">Advocacia</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="engenharia">Engenharia</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="marketing">Marketing</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="admin">Administração</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="edu">Educação</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="saude_publica">Saúde Pública</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="design">Design</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="arquitetura">Arquitetura</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="agricultura">Agricultura</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="juridico">Jurídico</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="cientifico">Científico</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="logistica">Logística</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="turismo">Turismo</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="comunicacao">Comunicação</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="vendas">Vendas</option>
-                          <option class="dark:text-white dark:bg-gray-700" value="financeiro">Financeiro</option>
-                      </select>
-                  </div>
-
-                  <div id="selectedTags" class="mt-4">
-                  </div>
-          
                   <div class="flex justify-center">
-                    <button type="button" id="btnFinalizar" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                      Finalizar
+                    <button type="button" id="btnFinalizar" onclick="gerarCurriculo()" class="transition-transform transform hover:scale-110 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                      Criar Currículo
                     </button>
                   </div>
                 </div>
           </form>
     </div>
 
-    <div id="curriculoPreview" class="mt-8"></div>
+    <div id="curriculoContainer"></div>
     </div>
+
+
+    <div class="text-center mt-8">
+      <p id="curriculoCriado" class="hidden mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">Currículo criado com sucesso!</p>
+
+      <button id="btnSalvarCurriculo" onclick="imprimirCurriculo()" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mx-auto">Salvar Currículo</button>
+    </div>
+
 
 
 <!--Footer-->
@@ -243,6 +279,19 @@
     </div>
 </footer>
 <!--Footer-->
+
+<script>
+    function formatarTelefone(input) {
+      const telefone = input.value.replace(/\D/g, "").substring(0,11);
+
+      const isCelular = input.value = telefone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    }
+    const telefoneInput = document.getElementById('celular');
+
+    telefoneInput.addEventListener('input', function() {
+      formatarTelefone(this);
+    });
+</script>
 
 
 
@@ -266,10 +315,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (document.documentElement.classList.contains('dark')) {
             localStorage.setItem('color-theme', 'dark');
-            themeToggleBtnMobile.textContent = 'Dark Mode';
+            themeToggleBtnMobile.textContent = 'Tema Escuro';
         } else {
             localStorage.setItem('color-theme', 'light');
-            themeToggleBtnMobile.textContent = 'Light Mode';
+            themeToggleBtnMobile.textContent = 'Tema Claro';
         }
     }
 
@@ -279,11 +328,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
         themeToggleLightIcon.classList.remove('hidden');
-        themeToggleBtnMobile.textContent = 'Dark Mode';
+        themeToggleBtnMobile.textContent = 'Tema Escuro';
     } else {
         document.documentElement.classList.remove('dark');
         themeToggleDarkIcon.classList.remove('hidden');
-        themeToggleBtnMobile.textContent = 'Light Mode';
+        themeToggleBtnMobile.textContent = 'Tema Claro';
     }
 });
 </script>
@@ -306,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function () {
           $('#uf').val(data.uf);
         },
         error: function() {
-          alert('CEP não encontrado.');
+          showAlertModalErro('CEP não encontrado.');
         }
       });
     }
@@ -317,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (cep.length === 8) {
         consultarCEP(cep);
       } else {
-        alert('Formato de CEP inválido.');
+        showAlertModalErro('Formato de CEP inválido.');
       }
     });
   });
@@ -337,11 +386,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnAnterior = document.querySelector('#btnAnterior');
     const btnProximo1 = document.querySelector('#btnProximo1');
     const btnProximo2 = document.querySelector('#btnProximo2');
+    const btnFinalizar = document.querySelector('#btnFinalizar');
 
     btnProximo1.addEventListener('click', function () {
-      form1.classList.add('hidden');
-      form2.classList.remove('hidden');
+      if (
+        document.getElementById('nome').value === '' ||
+        document.getElementById('celular').value === '' ||
+        document.getElementById('email').value === '' ||
+        document.getElementById('cep').value === '' ||
+        document.getElementById('logradouro').value === '' ||
+        document.getElementById('cidade').value === '' ||
+        document.getElementById('uf').value === ''
+      ) {
+        showAlertModalErro('Por favor, preencha todos os campos antes de prosseguir.');
+      } else {
+        form1.classList.add('hidden');
+        form2.classList.remove('hidden');
+      }
     });
+
 
     btnProximo2.addEventListener('click', function () {
       form3.classList.remove('hidden');
@@ -353,6 +416,12 @@ document.addEventListener('DOMContentLoaded', function () {
       form2.classList.add('hidden');
       form1.classList.remove('hidden');
     });
+
+    btnFinalizar.addEventListener('click', function() {
+      form1.classList.add('hidden');
+      form2.classList.add('hidden');
+      form3.classList.add('hidden');
+    });
 });
 </script>
 <!--script de paginas do formulario-->
@@ -363,43 +432,99 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!--script para adicionar formação/experiencia/habilidade-->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
     let numFormacao = 0;
     let numExperiencia = 0;
     let numHabilidade = 0;
 
+  document.addEventListener("DOMContentLoaded", function () {
+
     function createFormacaoInput() {
-        numFormacao++;
-        const container = document.getElementById("formacaoContainer");
-        const div = document.createElement("div");
-        div.innerHTML = `
-        <div class="mt-3 bg-gray-50 dark:bg-gray-800 mb-3 p-3 rounded-xl">
-          <div class="mt-2 text-gray-900 dark:text-white">
-                <label for="nivel${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Nível do Curso</label>
-                <select id="nivel${numFormacao}" name="nivel${numFormacao}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md ">
-                    <option class="dark:text-white dark:bg-gray-700" value="fundamental">Curso Livre</option>
-                    <option class="dark:text-white dark:bg-gray-700" value="fundamental">Ensino Fundamental</option>
-                    <option class="dark:text-white dark:bg-gray-700" value="medio">Ensino Médio</option>
-                    <option class="dark:text-white dark:bg-gray-700" value="tecnico">Curso Técnico</option>
-                    <option class="dark:text-white dark:bg-gray-700" value="tecnologo">Curso Tecnólogo</option>
-                    <option class="dark:text-white dark:bg-gray-700" value="bacharelado">Bacharelado</option>
-                    <option class="dark:text-white dark:bg-gray-700" value="licenciatura">Licenciatura</option>
-                    <option class="dark:text-white dark:bg-gray-700" value="pos-graduacao">Pós-graduação</option>
-                    <option class="dark:text-white dark:bg-gray-700" value="mestrado">Mestrado</option>
-                    <option class="dark:text-white dark:bg-gray-700" value="doutorado">Doutorado</option>
-                  </select>
-            </div>
-            <div class="mt-2">
-                <label for="curso${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Curso</label>
-                <input type="text" id="curso${numFormacao}" name="curso${numFormacao}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
-            </div>
-            <div class="mt-2 pb-4">
-                <label for="instituicao${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Instituição</label>
-                <input type="text" id="instituicao${numFormacao}" name="instituicao${numFormacao}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
-            </div>
+      numFormacao++;
+      const container = document.getElementById("formacaoContainer");
+      const div = document.createElement("div");
+      div.innerHTML = `
+      <div class="mt-3 bg-gray-50 dark:bg-gray-800 mb-3 p-3 rounded-xl">
+        <div class="mt-2 text-gray-900 dark:text-white">
+              <label for="nivel${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Nível do Curso</label>
+              <select id="nivel${numFormacao}" name="nivel${numFormacao}" class="dark:bg-gray-700 mt-1 p-2 w-full border-gray-300 rounded-md ">
+                  <option class="dark:text-white dark:bg-gray-700" value="Selecione o nivel de formação">Selecione o nivel de formação</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Curso Livre">Curso Livre</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Ensino Fundamental">Ensino Fundamental</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Ensino Médio">Ensino Médio</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Ensino Médio Técnico">Ensino Médio Técnico</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Curso Técnico">Curso Técnico</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Tecnólogo">Tecnólogo</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Bacharelado">Bacharelado</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Licenciatura">Licenciatura</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Pós-graduação">Pós-graduação</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Mestrado">Mestrado</option>
+                  <option class="dark:text-white dark:bg-gray-700" value="Doutorado">Doutorado</option>
+                </select>
           </div>
-        `;
-        container.appendChild(div);
+          <div class="hidden mt-2" id="cursoContainer${numFormacao}">
+              <label for="curso${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Curso</label>
+              <input type="text" id="curso${numFormacao}" name="curso${numFormacao}" class="border-gray-300 dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+          </div>
+          <div class="hidden mt-2" id="cargaHorariaContainer${numFormacao}">
+              <label for="cargahoraria${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Carga Horária</label>
+              <input type="text" id="cargahoraria${numFormacao}" name="cargahoraria${numFormacao}" class="border-gray-300 dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+          </div>
+          <div class="hidden mt-2" id="semestreContainer${numFormacao}">
+              <label for="semestre${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Semestre/Período</label>
+              <input type="text" id="semestre${numFormacao}" name="semestre${numFormacao}" class="border-gray-300 dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+          </div>
+          <div class="hidden mt-2 pb-4" id="instituicaoContainer${numFormacao}">
+              <label for="instituicao${numFormacao}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Instituição</label>
+              <input type="text" id="instituicao${numFormacao}" name="instituicao${numFormacao}" class="border-gray-300 dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+          </div>
+        </div>`;
+
+    container.appendChild(div);
+
+    // Adicionando um ouvinte de evento diretamente ao elemento select
+    const selectElement = document.getElementById(`nivel${numFormacao}`);
+    selectElement.addEventListener('change', function() {
+        checkCursoCargaHorariaVisibility(numFormacao);
+    });
+}
+
+function checkCursoCargaHorariaVisibility(numFormacao) {
+    const selectElement = document.getElementById(`nivel${numFormacao}`);
+    const cursoContainer = document.getElementById(`cursoContainer${numFormacao}`);
+    const cargaHorariaContainer = document.getElementById(`cargaHorariaContainer${numFormacao}`);
+    const semestreContainer = document.getElementById(`semestreContainer${numFormacao}`);
+    const instituicaoContainer = document.getElementById(`instituicaoContainer${numFormacao}`);
+
+    if (selectElement.value === "Ensino Fundamental" || selectElement.value === "Ensino Médio") {
+        cursoContainer.style.display = "none";
+        cargaHorariaContainer.style.display = "none";
+        semestreContainer.style.display = "none";
+        instituicaoContainer.style.display = "block";
+
+    } else if (selectElement.value === "Ensino Médio Técnico") {
+        cursoContainer.style.display = "block";
+        cargaHorariaContainer.style.display = "none";
+        semestreContainer.style.display = "none";
+        instituicaoContainer.style.display = "block";
+
+    } else if (selectElement.value === "Curso Livre" || selectElement.value === "Curso Técnico") {
+        cursoContainer.style.display = "block";
+        cargaHorariaContainer.style.display = "block";
+        semestreContainer.style.display = "none";
+        instituicaoContainer.style.display = "block";
+
+    } else if (selectElement.value === "Tecnólogo" || selectElement.value === "Bacharelado" || selectElement.value === "Licenciatura" || selectElement.value === "Pós-graduação" || selectElement.value === "Mestrado" || selectElement.value === "Doutorado") {
+        cursoContainer.style.display = "block";
+        cargaHorariaContainer.style.display = "none";
+        semestreContainer.style.display = "block";
+        instituicaoContainer.style.display = "block";
+
+    } else if (selectElement.value === "Selecione o nivel de formação") {
+        cursoContainer.style.display = "none";
+        cargaHorariaContainer.style.display = "none";
+        semestreContainer.style.display = "none";
+        instituicaoContainer.style.display = "none";
+      }
     }
 
     function createExperienciaInput() {
@@ -410,19 +535,40 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="mt-3 bg-gray-50 dark:bg-gray-800 mb-3 p-3 rounded-xl">
           <div class="mt-2">
             <label for="cargo${numExperiencia}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Cargo</label>
-            <input type="text" id="cargo${numExperiencia}" name="cargo${numExperiencia}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+            <input type="text" id="cargo${numExperiencia}" name="cargo${numExperiencia}" class="border-gray-300 dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
           </div>
           <div class="mt-2">
             <label for="empresa${numExperiencia}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Empresa ou Instituição</label>
-            <input type="text" id="empresa${numExperiencia}" name="empresa${numExperiencia}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+            <input type="text" id="empresa${numExperiencia}" name="empresa${numExperiencia}" class="border-gray-300 dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
           </div>
-          <div class="mt-2  pb-4">
-            <label for="periodo${numExperiencia}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Periodo</label>
-            <input type="text" id="periodo${numExperiencia}" name="periodo${numExperiencia}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md" placeholder="Exemplo: Janeiro/2023 - Novembro/2023">
+          <div class="grid grid-cols-2 gap-4 mt-2">
+            <div class="text-gray-900 dark:text-white">
+                <label for="periodoInicio${numExperiencia}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Data de Início</label>
+                <input type="date" id="periodoInicio${numExperiencia}" name="periodoInicio${numExperiencia}" class="border-gray-300 dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+            </div>
+            <div class="text-gray-900 dark:text-white">
+                <label for="periodoFim${numExperiencia}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Data de Término</label>
+                <input type="date" id="periodoFim${numExperiencia}" name="periodoFim${numExperiencia}" class="border-gray-300 dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+            </div>
           </div>
-        </div>
+          <label class="relative inline-flex items-center cursor-pointer mt-5">
+            <input type="checkbox" value="" class="sr-only peer" id="empregoAtual${numExperiencia}" name="empregoAtual${numExperiencia}" onchange="toggleDataFim(this)">
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            <span class="ml-2 ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">É seu emprego atual?</span>
+          </label>
         `;
         container.appendChild(div);
+    }
+
+    function toggleDataFim(checkbox) {
+        const numExperiencia = checkbox.id.match(/\d+/)[0];
+        const dataFimInput = document.getElementById(`periodoFim${numExperiencia}`);
+
+        console.log(`Checkbox checked: ${checkbox.checked}`);
+        if (dataFimInput !== null) {
+            console.log(`Data Fim Input: ${dataFimInput}`);
+            dataFimInput.disabled = checkbox.checked;
+        }
     }
 
     function createHabilidadeInput() {
@@ -433,7 +579,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="mt-3 bg-gray-50 dark:bg-gray-800 mb-3 p-3 rounded-xl">
             <div class="mt-1">
                 <label for="habilidade${numHabilidade}" class="block text-sm font-medium text-gray-600 dark:text-gray-300">Habilidade ou Competência</label>
-                <input type="text" id="habilidade${numHabilidade}" name="habilidade${numHabilidade}" class="dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
+                <input type="text" id="habilidade${numHabilidade}" name="habilidade${numHabilidade}" class="border-gray-300 dark:bg-gray-700 mt-1 p-2 w-full rounded-md">
             </div>
         </div>
         `;
@@ -444,9 +590,158 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("addExperiencia").addEventListener("click", createExperienciaInput);
     document.getElementById("addHabilidade").addEventListener("click", createHabilidadeInput);
 });
+
+
+
+
+function gerarCurriculo() {
+      const nome = document.getElementById("nome").value;
+      const celular = document.getElementById("celular").value;
+      const email = document.getElementById("email").value;
+      const cep = document.getElementById("cep").value;
+      const logradouro = document.getElementById("logradouro").value;
+      const cidade = document.getElementById("cidade").value;
+      const uf = document.getElementById("uf").value;
+      const imageInput = document.getElementById("image-input");
+      const imagePath = imageInput.files.length > 0 ? URL.createObjectURL(imageInput.files[0]) : "";
+      const btnSalvarCurriculo = document.getElementById('btnSalvarCurriculo');
+
+
+      const formacoes = [];
+        for (let i = 1; i <= numFormacao; i++) {
+            const nivel = document.getElementById(`nivel${i}`).value;
+            const curso = document.getElementById(`curso${i}`).value;
+            const cargaHoraria = document.getElementById(`cargahoraria${i}`).value;
+            const semestre = document.getElementById(`semestre${i}`).value;
+            const instituicao = document.getElementById(`instituicao${i}`).value;
+            formacoes.push({ nivel, curso, cargaHoraria, semestre, instituicao });
+        }
+
+        const experiencias = [];
+          for (let i = 1; i <= numExperiencia; i++) {
+              const cargo = document.getElementById(`cargo${i}`).value;
+              const empresa = document.getElementById(`empresa${i}`).value;
+              const periodoInicio = document.getElementById(`periodoInicio${i}`).value;
+              const periodoFim = document.getElementById(`periodoFim${i}`).value;
+              const empregoAtualCheckbox = document.getElementById(`empregoAtual${i}`);
+
+              const inicioComponents = periodoInicio.split("-");
+              const fimComponents = empregoAtualCheckbox.checked ? ["Atualmente"] : periodoFim.split("-");
+
+              const periodo = `${inicioComponents.reverse().join("/")} - ${fimComponents.reverse().join("/")}`;
+              experiencias.push({ cargo, empresa, periodo });
+          }
+
+      const habilidades = [];
+      for (let i = 1; i <= numHabilidade; i++) {
+          const habilidade = document.getElementById(`habilidade${i}`).value;
+          habilidades.push(habilidade);
+      }
+
+      const curriculoHTML = `
+      <div class="bg-white dark:text-gray-900 p-4 md:p-8 rounded-md max-w-a4 mx-auto mt-8 w-a4 h-auto overflow-hidden">
+        <div class="flex flex-col md:flex-row items-center mb-8">
+          <img src="${imagePath}" alt="Foto de ${nome}" class="md:mr-6 rounded-full w-32 h-32 object-cover mb-4 md:mb-0 md:w-32 md:h-32">
+
+          <div class="md:ml-6">
+            <h1 class="text-2xl md:text-3xl font-bold">${nome}</h1>
+            <p class="text-base"><span class="font-bold">Telefone/Celular:</span> ${celular}</p>
+            <p class="text-base"><span class="font-bold">Email:</span> ${email}</p>
+            <p class="text-base"><span class="font-bold">Endereço:</span> ${logradouro}, ${cidade} - ${uf}, CEP: ${cep}</p>
+          </div>
+        </div>
+
+        <hr class="my-6">
+
+        <h2 class="text-lg md:text-xl font-bold mb-4">Formação Acadêmica</h2>
+        ${formacoes.map(formacao => `
+            <div class="mb-4 md:mb-6">
+                ${formacao.nivel ? `<p class="text-base"><span class="font-bold">Nível:</span> ${formacao.nivel}</p>` : ''}
+                ${formacao.curso ? `<p class="text-base"><span class="font-bold">Curso:</span> ${formacao.curso}</p>` : ''}
+                ${formacao.cargaHoraria ? `<p class="text-base"><span class="font-bold">Carga Horária:</span> ${formacao.cargaHoraria}</p>` : ''}
+                ${formacao.semestre ? `<p class="text-base"><span class="font-bold">Semestre/Período:</span> ${formacao.semestre}</p>` : ''}
+                ${formacao.instituicao ? `<p class="text-base"><span class="font-bold">Instituição:</span> ${formacao.instituicao}</p>` : ''}
+            </div>
+        `).join('')}
+
+        <hr class="my-6">
+
+        <h2 class="text-lg md:text-xl font-bold mb-4">Experiência Profissional</h2>
+        ${experiencias.map(experiencia => `
+          <div class="mb-4 md:mb-6">
+            <p class="text-base"><span class="font-bold">Cargo:</span> ${experiencia.cargo}</p>
+            <p class="text-base"><span class="font-bold">Empresa:</span> ${experiencia.empresa}</p>
+            <p class="text-base"><span class="font-bold">Período:</span> ${experiencia.periodo}</p>
+          </div>
+        `).join('')}
+
+        <hr class="my-6">
+
+        <h2 class="text-lg md:text-xl font-bold mb-4">Habilidades</h2>
+        <div class="flex flex-wrap">
+          ${habilidades.map(habilidade => `<p class="bg-gray-800 text-white rounded-md px-3 py-1 m-1 text-sm md:text-base">${habilidade}</p>`).join('')}
+        </div>
+        </div>
+
+        `;
+
+      document.getElementById("curriculoContainer").innerHTML = curriculoHTML;
+
+      document.getElementById("btnSalvarCurriculo").style.display = 'block';
+      document.getElementById("curriculoCriado").style.display = 'block';
+      document.getElementById("enviarCurriculo").style.display = 'block';
+  }
+
+
+  function showAlertModal(message) {
+    document.querySelector('#popup-modal h3').innerText = message;
+
+    document.getElementById('popup-modal').classList.remove('hidden');
+
+    document.querySelector('#popup-modal [data-modal-hide]').addEventListener('click', function() {
+      document.getElementById('popup-modal').classList.add('hidden');
+      window.location.href = '/vagas/vagas.html';
+    });
+  }
+
+  
+  function imprimirCurriculo() {
+    const curriculoContainer = document.getElementById("curriculoContainer");
+    const nome = document.getElementById("nome").value;
+
+    const nomeFormatado = nome.replace(/\s+/g, '_').toLowerCase();
+
+    const options = {
+        margin: 3,
+        filename: `curriculo_${nomeFormatado}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // Use html2pdf para gerar o PDF
+    html2pdf(curriculoContainer, options).then(pdf => {
+        const blob = new Blob([pdf.output], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = options.filename;
+        link.click();
+    });
+    showAlertModal("Parabéns, agora você possui um currículo profissional, está na hora de enviar para as empresas!");
+}
 </script>
 <!--script para adicionar formação/experiencia/habilidade-->
 
+<script>
+  function showAlertModalErro(message) {
+    document.querySelector('#popup-modal-erro h3').innerText = message;
+    document.getElementById('popup-modal-erro').style.display = 'flex';
+  }
+
+  document.querySelector('#popup-modal-erro [data-modal-hide]').addEventListener('click', function() {
+    document.getElementById('popup-modal-erro').style.display = 'none';
+  });
+</script>
 
 
 </body>
